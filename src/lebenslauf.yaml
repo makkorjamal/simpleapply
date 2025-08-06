@@ -1,0 +1,61 @@
+candidate: 
+
+    personal:
+      - name: "Jane Doe"
+      - position : "Python developer"
+      - address: "Elm Street, 1000, City, Country"
+      - email: "mailto:myemail@gnu.org"
+      - website: "example.com"
+      - telephone: "012456789"
+
+    experience:
+      - title: "01-2020"
+        details:
+          - "Worked as a Software Engineer at Company A"
+          - "Developed a web application using React"
+      - title: "01-2021"
+        details:
+          - "Promoted to Senior Software Engineer"
+          - "Led a team of 5 developers in various projects"
+      - title: "01-2022"
+        details:
+          - "Transitioned to Project Manager"
+          - "Managed multiple projects simultaneously, ensuring timely delivery and quality standards"
+
+    education:
+      - title: "01-2018"
+        details:
+          - "Bachelor's Degree in Computer Science from University X"
+      - title: "01-2020"
+        details:
+          - "Completed a certification in Project Management"
+          
+    skills:
+      - title: "Programming Languages"
+        details:
+          - "Proficient in JavaScript, Python, and Java"
+      - title: "Frameworks"
+        details:
+          - "Experienced with React, Node.js, and Django"
+      - title: "Project Management"
+        details:
+          - "Skilled in Agile methodologies and team leadership"
+
+    languages:
+      - title: "French"
+        details:
+          - "Fluent"
+      - title: "German"
+        details:
+          - "Very good (B2 level)"
+      - title: "English"
+        details:
+          - "Proficient (C1 level)"
+
+    hobbies:
+      - title: "General"
+        details:
+          - "Travel, bird watching"
+      - title: "Specific"
+        details:
+          - "Amateur Astronomy"

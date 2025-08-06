@@ -1,0 +1,21 @@
+\documentclass{article}%
+\usepackage[utf8]{inputenc}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage{fontspec}%
+%
+
+\setmainfont[
+    Path = ../fonts/,        % Directory where your font file lives
+    Extension = .otf,     % Font file extension
+    UprightFont = *       % Use the file name MyFont.ttf as the upright font
+]{FontinSmallCaps}
+%
+%
+\begin{document}%
+\normalsize%
+\section*{HugeText(Custom Font from File})%
+This paragraph is typeset using the locally stored font file MyFont.ttf.%
+\section*{Custom Font from File}%
+This paragraph is typeset using the locally stored font file MyFont.ttf.%
+\end{document}
