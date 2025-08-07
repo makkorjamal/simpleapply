@@ -19,8 +19,8 @@ MusterStadt
 #gender = "e" #weiblich
 #gender = "er"
 gender = ""
-name = "Max Mustermann"
+hrname = "Max Mustermann"
 speciality = "Speciality"
 first_info = ""
 second_info = ""
-signature_file = "signature.png"
+signature_file = "images/signature.png"

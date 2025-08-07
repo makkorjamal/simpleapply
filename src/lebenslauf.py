@@ -38,9 +38,8 @@ class Lebenslauf(Document):
         ''')
         self.append(Command(font_command))
 
-    def add_tiny_img(self,path, size):
-        with self.create(Figure(position="!ht")) as tinyimage:
-            tinyimage.add_image(path, width=NoEscape(r"" + size))
+    def add_timg(self,path, size = "0.8em"):
+        return NoEscape(r"\includegraphics[width="+size+r"]{"+path+r"}")
 
     def extract_data(self, data):
 
@@ -106,13 +105,13 @@ class Lebenslauf(Document):
         with self.create(Center()):
             with self.create(Tabular("l|ll")) as ptable:
                 ptable.add_row((MultiRow(2, data=LargeText("Address")),\
-                        NoEscape(r"\includegraphics[width=0.8em]{images/address}"), LargeText("Elm street, 10000, City, Country")))
+                        self.add_timg("images/address"), LargeText("Elm street, 10000, City, Country")))
                 ptable.add_row((MultiRow(2, data=LargeText("Telephone")),\
-                        NoEscape(r"\includegraphics[width=0.8em]{images/telephone}"), LargeText("0123456789")))
+                        self.add_timg("images/telephone"), LargeText("0123456789")))
                 ptable.add_row((MultiRow(2, data=LargeText("Email")),\
-                        NoEscape(r"\includegraphics[width=0.8em]{images/email}"), LargeText("contact@example.com")))
+                        self.add_timg("images/email"), LargeText("contact@example.com")))
                 ptable.add_row((MultiRow(2, data=LargeText("Website")),\
-                        NoEscape(r"\includegraphics[width=0.8em]{images/website}"), LargeText("example.com")))
+                        self.add_timg("images/website"), LargeText("example.com")))
         #self.append(ptable)
         self.append(Command(NoEscape(r"newpage")))
 

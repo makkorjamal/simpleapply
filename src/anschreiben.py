@@ -31,14 +31,14 @@ class Anschreiben(Document):
         with self.create(MiniPage(width=r"\textwidth")) as page:
 
             with page.create(TextBlock(100, 140, 0)):
-                page.append(bold(self.input_data['myname']))
+                page.append(bold(self.input_data['name']))
             with page.create(TextBlock(100, 140, 2)):
-                page.append(self.input_data["myaddress"])
+                page.append(self.input_data["address"])
 
             with page.create(TextBlock(100, 0, 18)):
                 page.append(self.input_data["company"])
             with page.create(TextBlock(100, 0, 20)):
-                page.append(self.input_data["address"])
+                page.append(self.input_data["caddress"])
 
             with page.create(TextBlock(100, 150, 50)):
                 page.append(current_date)
@@ -50,12 +50,12 @@ class Anschreiben(Document):
             with page.create(TextBlock(100, 0, 80)):
                 if self.input_data['gender']:
                     page.append(bold(f"Sehr geehrt{self.input_data['gender']}\
-                            {self.input_data['name']},"))
+                            {self.input_data['hrname']},"))
                 else:
                     page.append(bold(f"Sehr geehrte Damen und Herren,"))
 
             with page.create(TextBlock(100, 130, 200)):
-                page.append(bold(self.input_data['myname']))
+                page.append(bold(self.input_data['name']))
 
             page.append(VerticalSpace("90mm"))
             self.append(Command('onehalfspacing'))
