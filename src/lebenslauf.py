@@ -3,8 +3,11 @@ from collections import namedtuple
 from pylatex import (
     Document,
     HugeText,
+    LargeText,
     Package,
     Tabularx,
+    Center,
+    Tabular,
     MultiRow,
     MultiColumn,
     Command,
@@ -34,6 +37,10 @@ class Lebenslauf(Document):
         ]{Fontin}
         ''')
         self.append(Command(font_command))
+
+    def add_tiny_img(self,path, size):
+        with self.create(Figure(position="!ht")) as tinyimage:
+            tinyimage.add_image(path, width=NoEscape(r"" + size))
 
     def extract_data(self, data):
 
@@ -66,8 +73,6 @@ class Lebenslauf(Document):
         self.append(field)
         self.append(Command('end', 'flushleft'))
 
-        self.append(VerticalSpace("5mm"))
-
     def fill_document(self):
 
         #Get the data
@@ -80,13 +85,8 @@ class Lebenslauf(Document):
         languages = candidate_data.candidate.languages
         hobbies = candidate_data.candidate.hobbies
         #personal details
-        position = candidate_data.candidate.position
-        name = candidate_data.candidate.name
-        address = candidate_data.candidate.address
-        email = candidate_data.candidate.email
-        website = candidate_data.candidate.website
-        telephone = candidate_data.candidate.telephone
-
+        position = "Python developer"
+        name = "Jamal Makkor"
         # Setup up the CV
         self.append(VerticalSpace("10mm"))
         self.append(Command('begin', 'center'))
@@ -95,13 +95,25 @@ class Lebenslauf(Document):
 
         self.append(NoEscape(r"\noindent\rule{\textwidth}{1pt}"))
         self.append(NewLine())
-        self.append(VerticalSpace("70mm"))
+        self.append(VerticalSpace("40mm"))
         with self.create(Figure(position="!ht")) as passphoto:
-            passphoto.add_image('passphoto.png', width=NoEscape(r"0.5\textwidth"))
+            passphoto.add_image('images/passphoto', width=NoEscape(r"0.5\textwidth"))
 
         self.append(Command('begin', 'center'))
         self.append(HugeText(NoEscape(r"" + name)))
         self.append(Command('end', 'center'))
+        self.append(VerticalSpace("30mm"))
+        with self.create(Center()):
+            with self.create(Tabular("l|ll")) as ptable:
+                ptable.add_row((MultiRow(2, data=LargeText("Address")),\
+                        NoEscape(r"\includegraphics[width=0.8em]{images/address}"), LargeText("Elm street, 10000, City, Country")))
+                ptable.add_row((MultiRow(2, data=LargeText("Telephone")),\
+                        NoEscape(r"\includegraphics[width=0.8em]{images/telephone}"), LargeText("0123456789")))
+                ptable.add_row((MultiRow(2, data=LargeText("Email")),\
+                        NoEscape(r"\includegraphics[width=0.8em]{images/email}"), LargeText("contact@example.com")))
+                ptable.add_row((MultiRow(2, data=LargeText("Website")),\
+                        NoEscape(r"\includegraphics[width=0.8em]{images/website}"), LargeText("example.com")))
+        #self.append(ptable)
         self.append(Command(NoEscape(r"newpage")))
 
         #Fill the fields
@@ -111,7 +123,7 @@ class Lebenslauf(Document):
         self.fill_fields(skills, "Languages")
         self.fill_fields(skills, "Hobbies")
         with self.create(Figure(position="ht")) as signature:
-            signature.add_image("signature.png", \
+            signature.add_image("images/signature.png", \
                     width=NoEscape(r"0.2\linewidth"), \
                     placement=NoEscape(r"\raggedleft"))
 

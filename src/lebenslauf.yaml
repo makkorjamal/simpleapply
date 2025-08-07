@@ -1,13 +1,5 @@
 candidate: 
 
-    personal:
-      - name: "Jane Doe"
-      - position : "Python developer"
-      - address: "Elm Street, 1000, City, Country"
-      - email: "mailto:myemail@gnu.org"
-      - website: "example.com"
-      - telephone: "012456789"
-
     experience:
       - title: "01-2020"
         details:

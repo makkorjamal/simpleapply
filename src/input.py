@@ -1,15 +1,18 @@
-myname = "Jamal Makkor"
-myaddress = """
-MusterStr,
-0000, MusterStadt
-Germany
-"""
+position = "X Sprache Entwickler"
+name = "Jamal Makkor"
+address="""Elm Street,
+1000, City, 
+Country"""
+email="mailto:myemail@gnu.org"
+website="example.com"
+telephone="012456789"
+
 study = "Muster Master oder ausbildung"
 university = "MusterStadt"
 work1 = "Muster Arbeit"
 #Company info
 company = "Musterfirma GmbH"
-address = """
+caddress = """
 MusterStr, 0000
 MusterStadt
 """
@@ -17,7 +20,6 @@ MusterStadt
 #gender = "er"
 gender = ""
 name = "Max Mustermann"
-position = "X Sprache Entwickler"
 speciality = "Speciality"
 first_info = ""
 second_info = ""
