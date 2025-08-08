@@ -80,9 +80,6 @@ class Lebenslauf(Document):
     def fill_document(self):
 
         counter = self.input_data['num_of_personal_info']
-        for i, (k,v) in enumerate(self.input_data.items()):
-            if (i > 0 and i < counter):
-                print(k,v)
         #Get the data
         print(self.template_data)
         self.append(VerticalSpace("10mm"))
