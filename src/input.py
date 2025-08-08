@@ -1,12 +1,16 @@
-position = "X Sprache Entwickler"
+#######################################
+
+num_of_personal_info = 5
 name = "Jamal Makkor"
-address="""Elm Street,
-1000, City, 
-Country"""
 email="mailto:myemail@gnu.org"
 website="example.com"
 telephone="012456789"
+address="""Elm Street,
+1000, City, 
+Country"""
 
+#######################################
+position = "X Sprache Entwickler"
 study = "Muster Master oder ausbildung"
 university = "MusterStadt"
 work1 = "Muster Arbeit"

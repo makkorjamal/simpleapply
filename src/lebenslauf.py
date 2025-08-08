@@ -20,9 +20,14 @@ from pylatex import (
 from pylatex.utils import bold
 
 class Lebenslauf(Document):
-    def __init__(self, geometry_options = None):
+    def __init__(self, template_data = None, input_data = None, geometry_options = None):
         super().__init__(documentclass='article', fontenc=None, lmodern=False,\
                 document_options='a4paper', geometry_options = geometry_options)
+        self.template_data = template_data
+        self.template_data = template_data
+        self.input_data = input_data
+        self.geometry_options = geometry_options
+
         self.packages.append(Package('fontspec'))
         self.packages.append(Package('graphicx'))
         self.packages.append(Package('multirow'))
@@ -74,22 +79,15 @@ class Lebenslauf(Document):
 
     def fill_document(self):
 
+        counter = self.input_data['num_of_personal_info']
+        for i, (k,v) in enumerate(self.input_data.items()):
+            if (i > 0 and i < counter):
+                print(k,v)
         #Get the data
-        with open('lebenslauf.yaml', 'r') as file:
-            candidate_data = yaml.safe_load(file)
-        candidate_data = self.extract_data(candidate_data)
-        experience = candidate_data.candidate.experience
-        education = candidate_data.candidate.education
-        skills = candidate_data.candidate.skills
-        languages = candidate_data.candidate.languages
-        hobbies = candidate_data.candidate.hobbies
-        #personal details
-        position = "Python developer"
-        name = "Jamal Makkor"
-        # Setup up the CV
+        print(self.template_data)
         self.append(VerticalSpace("10mm"))
         self.append(Command('begin', 'center'))
-        self.append(HugeText(NoEscape(r"Bewerbung als " + position)))
+        self.append(HugeText(NoEscape(r"Bewerbung als " + self.input_data['position'])))
         self.append(Command('end', 'center'))
 
         self.append(NoEscape(r"\noindent\rule{\textwidth}{1pt}"))
@@ -99,38 +97,26 @@ class Lebenslauf(Document):
             passphoto.add_image('images/passphoto', width=NoEscape(r"0.5\textwidth"))
 
         self.append(Command('begin', 'center'))
-        self.append(HugeText(NoEscape(r"" + name)))
+        self.append(HugeText(NoEscape(r"" + self.input_data['name'])))
         self.append(Command('end', 'center'))
         self.append(VerticalSpace("30mm"))
         with self.create(Center()):
             with self.create(Tabular("l|ll")) as ptable:
-                ptable.add_row((MultiRow(2, data=LargeText("Address")),\
-                        self.add_timg("images/address"), LargeText("Elm street, 10000, City, Country")))
-                ptable.add_row((MultiRow(2, data=LargeText("Telephone")),\
-                        self.add_timg("images/telephone"), LargeText("0123456789")))
-                ptable.add_row((MultiRow(2, data=LargeText("Email")),\
-                        self.add_timg("images/email"), LargeText("contact@example.com")))
-                ptable.add_row((MultiRow(2, data=LargeText("Website")),\
-                        self.add_timg("images/website"), LargeText("example.com")))
-        #self.append(ptable)
+                for i, (k,v) in enumerate(self.input_data.items()):
+                    if (i > 1 and i <= counter):
+                        ptable.add_row((MultiRow(2, data=LargeText(f"{k}")),\
+                                self.add_timg(f"images/{k}"),\
+                                LargeText(f"{v.replace("\n","")}")))
         self.append(Command(NoEscape(r"newpage")))
 
         #Fill the fields
-        self.fill_fields(experience, "Experience")
-        self.fill_fields(education, "Education")
-        self.fill_fields(skills, "Skills")
-        self.fill_fields(skills, "Languages")
-        self.fill_fields(skills, "Hobbies")
+        for k,v in self.template_data.items():
+            self.fill_fields(v, k)
+
         with self.create(Figure(position="ht")) as signature:
             signature.add_image("images/signature.png", \
                     width=NoEscape(r"0.2\linewidth"), \
                     placement=NoEscape(r"\raggedleft"))
 
-
-if __name__ == "__main__":
-
-    geometry_options = {"margin":"1.5in"}
-    doc = Lebenslauf(geometry_options = geometry_options)
-    doc.fill_document()
-    doc.generate_pdf("Lebenslauf",compiler = 'xelatex', clean_tex=False)
-    tex = doc.dumps()
+    def generate_document(self):
+        self.generate_pdf("Lebenslauf",compiler = 'xelatex', clean_tex=False)

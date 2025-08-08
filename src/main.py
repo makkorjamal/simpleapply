@@ -1,9 +1,23 @@
 import getopt, sys
+import yaml
+from collections import namedtuple
 from anschreiben import Anschreiben
+from lebenslauf import Lebenslauf
 import copy
 
 def usage():
     print("Usage: main.py -i <inputfile> -t <templatefile> [-v]")
+
+def extract_yamldata(data):
+    try:
+        if isinstance(data, dict):
+            return namedtuple('ResumeObject', data.keys())(**{k: extract_yamldata(v) for k, v in data.items()})
+        elif isinstance(data, list):
+            return [extract_yamldata(item) for item in data]
+        else:
+            return data
+    except:
+        print("Error reading the yaml file")
 
 def main():
     try:
@@ -35,18 +49,36 @@ def main():
         elif o in ("-t", "--template"):
             if verbose:
                 print("Reading template from", a)
-            template_data.update(input_data)
-            with open(a) as f:
-                tcode = compile(f.read(), a, 'exec')
-                exec(tcode, {}, template_data)
-                geometry_options = {"margin":"1.0in"}
-                anschreiben = Anschreiben(geometry_options = geometry_options,\
-                        input_data = input_data, template = template_data)
-                anschreiben.fill_document()
-                anschreiben.generate_document()
+            if ".py" in a:
+                with open(a) as f:
+                    template_data.update(input_data)
+                    tcode = compile(f.read(), a, 'exec')
+                    exec(tcode, {}, template_data)
+                    geometry_options = {"margin":"1.0in"}
+                    anschreiben = Anschreiben(geometry_options = geometry_options,\
+                            input_data = input_data, template = template_data)
+                    anschreiben.fill_document()
+                    anschreiben.generate_document()
+                    _ = anschreiben.dumps()
+            if ".yaml" in a:
+                with open('lebenslauf.yaml', 'r') as file:
+                    data = yaml.safe_load(file)
+                    candidate_data = extract_yamldata(data)
+                    geometry_options = {"margin":"1.0in"}
+                    template_data = {
+                            "Experience" : candidate_data.candidate.experience,
+                            "Education" : candidate_data.candidate.education,
+                            "Skills" : candidate_data.candidate.skills,
+                            "Languages" : candidate_data.candidate.languages,
+                            "Hobbies" : candidate_data.candidate.hobbies,
+                    }
+                    lebenslauf =Lebenslauf(geometry_options = geometry_options,\
+                            input_data = input_data, template_data = template_data)
+                    lebenslauf.fill_document()
+                    lebenslauf.generate_document()
+                    _ = lebenslauf.dumps()
         else:
             assert False, "Unhandled option"
-    #process(args, output=output, verbose=verbose)
 
 if __name__ == "__main__":
     main()
