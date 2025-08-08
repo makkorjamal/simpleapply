@@ -61,7 +61,7 @@ def main():
                     anschreiben.generate_document()
                     _ = anschreiben.dumps()
             if ".yaml" in a:
-                with open('lebenslauf.yaml', 'r') as file:
+                with open(a, 'r') as file:
                     data = yaml.safe_load(file)
                     candidate_data = extract_yamldata(data)
                     geometry_options = {"margin":"1.0in"}

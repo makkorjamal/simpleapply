@@ -32,7 +32,7 @@ class Anschreiben(Document):
 
             with page.create(TextBlock(100, 140, 0)):
                 page.append(bold(self.input_data['name']))
-            with page.create(TextBlock(100, 140, 2)):
+            with page.create(TextBlock(100, 140, 5)):
                 page.append(self.input_data["address"])
 
             with page.create(TextBlock(100, 0, 18)):
