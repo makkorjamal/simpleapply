@@ -33,6 +33,7 @@ python main.py -i input.py -t templates/lebenslauf.yaml
 ## Images
 Check the screenshots. You can check examples of the output files in the examples folder
 <img width="397" height="490" alt="Image4" src="https://github.com/user-attachments/assets/b11bd5da-6f84-42d5-b283-d45623bfd4ad" />
-<img width="397" height="490" alt="Image1" src="https://github.com/user-attachments/assets/e7bd2437-a1af-49fd-9329-a7aa2974fc98" />
-<img width="397" height="490" alt="Image2" src="https://github.com/user-attachments/assets/2c80e43c-474e-4239-b893-f85bcb1727e2" />
 <img width="397" height="490" alt="Image3" src="https://github.com/user-attachments/assets/ed1e7370-df65-48e0-9f09-87019c368939" />
+<img width="397" height="490" alt="Image2" src="https://github.com/user-attachments/assets/2c80e43c-474e-4239-b893-f85bcb1727e2" />
+<img width="397" height="490" alt="Image1" src="https://github.com/user-attachments/assets/e7bd2437-a1af-49fd-9329-a7aa2974fc98" />
+
