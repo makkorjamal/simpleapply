@@ -1,5 +1,11 @@
 candidate: 
 
+    personal:
+      - email: mymail@example
+      - address: Elm Street, 1000 City, Country
+      - website: example.com
+      - telephone: 001545892
+
     experience:
       - title: "01-2020"
         details:

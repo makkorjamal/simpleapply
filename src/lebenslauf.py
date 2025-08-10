@@ -38,13 +38,26 @@ class Lebenslauf(Document):
     def extract_data(self, data):
 
         if isinstance(data, dict):
-            return namedtuple('ResumeObject', data.keys())(**{k: self.extract_data(v) for k, v in data.items()})
+            return namedtuple('ResumeObject', data.keys())(**{k: \
+                    self.extract_data(v) \
+                    for k, v in data.items()})
         elif isinstance(data, list):
             return [self.extract_data(item) for item in data]
         else:
             return data
 
-    def fill_fields(self, field_data, fieldname):
+    def fill_personal(self, field_data):
+        with self.create(Center()):
+            with self.create(Tabular("l|ll")) as ptable:
+                for c in field_data: 
+                    cfield = c._fields[0] 
+                    cval = getattr(c, cfield)
+                    ptable.add_row((MultiRow(2, \
+                            data=LargeText(f"{cfield.capitalize()}")),\
+                            self.add_timg(f"images/{cfield}"),\
+                            LargeText(f"{cval}")))
+
+    def fill_professional(self, field_data, fieldname):
         tsize = "{14cm}"
         self.append(NoEscape(r"\renewcommand{\arraystretch}{3}"))
         self.append(NoEscape(r"\setlength{\tabcolsep}{4pt}"))
@@ -68,8 +81,6 @@ class Lebenslauf(Document):
 
     def fill_document(self):
 
-        counter = self.input_data['num_of_personal_info']
-        #Get the data
         self.append(VerticalSpace("10mm"))
         self.append(Command('begin', 'center'))
         self.append(HugeText(NoEscape(r"Bewerbung als " + self.input_data['position'])))
@@ -85,19 +96,15 @@ class Lebenslauf(Document):
         self.append(HugeText(NoEscape(r"" + self.input_data['name'])))
         self.append(Command('end', 'center'))
         self.append(VerticalSpace("30mm"))
-        with self.create(Center()):
-            with self.create(Tabular("l|ll")) as ptable:
-                for i, (k,v) in enumerate(self.input_data.items()):
-                    if (i > 1 and i <= counter):
-                        ptable.add_row((MultiRow(2, data=LargeText(f"{k}")),\
-                                self.add_timg(f"images/{k}"),\
-                                LargeText(f"{v.replace("\n","")}")))
-        self.append(Command(NoEscape(r"newpage")))
 
         for _,v0 in self.template_data.items():
-            for k1,v1 in v0.items():
+            for i, (k1,v1) in enumerate(v0.items()):
                 cdata = self.extract_data(v1)
-                self.fill_fields(cdata,k1.capitalize())
+                if i == 0:
+                    self.fill_personal(cdata)
+                    self.append(Command(NoEscape(r"newpage")))
+                else:
+                    self.fill_professional(cdata,k1.capitalize())
 
         with self.create(Figure(position="ht")) as signature:
             signature.add_image("images/signature.png", \
