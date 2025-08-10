@@ -1,21 +1,11 @@
 import yaml
 from collections import namedtuple
 from pylatex import (
-    Document,
-    HugeText,
-    LargeText,
-    Package,
-    Tabularx,
-    Center,
-    Tabular,
-    MultiRow,
-    MultiColumn,
-    Command,
-    Figure,
-    MediumText,
-    NoEscape,
-    NewLine,
-    VerticalSpace,
+    Document, HugeText, LargeText,
+    Package, Tabularx, Center,
+    Tabular, MultiRow, MultiColumn,
+    Command, Figure, MediumText,
+    NoEscape, NewLine, VerticalSpace,
 )
 from pylatex.utils import bold
 
