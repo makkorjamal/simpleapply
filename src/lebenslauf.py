@@ -24,7 +24,6 @@ class Lebenslauf(Document):
         super().__init__(documentclass='article', fontenc=None, lmodern=False,\
                 document_options='a4paper', geometry_options = geometry_options)
         self.template_data = template_data
-        self.template_data = template_data
         self.input_data = input_data
         self.geometry_options = geometry_options
 
@@ -81,7 +80,6 @@ class Lebenslauf(Document):
 
         counter = self.input_data['num_of_personal_info']
         #Get the data
-        print(self.template_data)
         self.append(VerticalSpace("10mm"))
         self.append(Command('begin', 'center'))
         self.append(HugeText(NoEscape(r"Bewerbung als " + self.input_data['position'])))
@@ -106,9 +104,10 @@ class Lebenslauf(Document):
                                 LargeText(f"{v.replace("\n","")}")))
         self.append(Command(NoEscape(r"newpage")))
 
-        #Fill the fields
-        for k,v in self.template_data.items():
-            self.fill_fields(v, k)
+        for _,v0 in self.template_data.items():
+            for k1,v1 in v0.items():
+                cdata = self.extract_data(v1)
+                self.fill_fields(cdata,k1.capitalize())
 
         with self.create(Figure(position="ht")) as signature:
             signature.add_image("images/signature.png", \

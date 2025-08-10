@@ -63,17 +63,9 @@ def main():
             if ".yaml" in a:
                 with open(a, 'r') as file:
                     data = yaml.safe_load(file)
-                    candidate_data = extract_yamldata(data)
                     geometry_options = {"margin":"1.0in"}
-                    template_data = {
-                            "Experience" : candidate_data.candidate.experience,
-                            "Education" : candidate_data.candidate.education,
-                            "Skills" : candidate_data.candidate.skills,
-                            "Languages" : candidate_data.candidate.languages,
-                            "Hobbies" : candidate_data.candidate.hobbies,
-                    }
                     lebenslauf =Lebenslauf(geometry_options = geometry_options,\
-                            input_data = input_data, template_data = template_data)
+                            input_data = input_data, template_data = data)
                     lebenslauf.fill_document()
                     lebenslauf.generate_document()
                     _ = lebenslauf.dumps()
