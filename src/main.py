@@ -8,17 +8,6 @@ import copy
 def usage():
     print("Usage: main.py -i <inputfile> -t <templatefile> [-v]")
 
-def extract_yamldata(data):
-    try:
-        if isinstance(data, dict):
-            return namedtuple('ResumeObject', data.keys())(**{k: extract_yamldata(v) for k, v in data.items()})
-        elif isinstance(data, list):
-            return [extract_yamldata(item) for item in data]
-        else:
-            return data
-    except:
-        print("Error reading the yaml file")
-
 def main():
     try:
         opts, args = getopt.getopt(
