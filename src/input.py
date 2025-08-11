@@ -1,6 +1,9 @@
+#config
+fontpath = "fonts/"
+fontname = "Fontin"
+imagespath = "images/"
 #######################################
 
-num_of_personal_info = 5
 name = "Jamal Makkor"
 email="mailto:myemail@gnu.org"
 website="example.com"
