@@ -35,7 +35,6 @@ class Lebenslauf(Document):
                                      'top=2cm, bottom=2cm, left=2cm, right=2cm'))
         fontpath = os.path.join(self.input_data['fontpath'])
         fontname = self.input_data["fontname"]
-        print(fontpath)
         font_command = NoEscape(
         r'''
         \setmainfont[
