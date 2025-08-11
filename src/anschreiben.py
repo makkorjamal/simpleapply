@@ -69,4 +69,5 @@ class Anschreiben(Document):
                     placement=NoEscape(r"\raggedleft"))
 
     def generate_document(self):
-        self.generate_pdf("Anschreiben", clean_tex=False)
+        self.generate_pdf(f"Anschreiben_{self.input_data['name'].replace(' ','_')}",\
+                clean_tex=False)

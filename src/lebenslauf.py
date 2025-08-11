@@ -32,11 +32,16 @@ class Lebenslauf(Document):
         ''')
         self.append(Command(font_command))
 
-    def add_timg(self,path, size = "0.8em"):
+    def add_timg(self,path, size = "1.0em"):
+        """
+        add a small image in the personal information field
+        """
         return NoEscape(r"\includegraphics[width="+size+r"]{"+path+r"}")
 
     def extract_data(self, data):
-
+        """
+        convert the yaml data to Ordered list objects
+        """
         if isinstance(data, dict):
             return namedtuple('ResumeObject', data.keys())(**{k: \
                     self.extract_data(v) \
@@ -47,6 +52,10 @@ class Lebenslauf(Document):
             return data
 
     def fill_personal(self, field_data):
+        """
+        Fill the personal data in the first page
+        including tiny icons
+        """
         with self.create(Center()):
             with self.create(Tabular("l|ll")) as ptable:
                 for c in field_data: 
@@ -58,6 +67,10 @@ class Lebenslauf(Document):
                             LargeText(f"{cval}")))
 
     def fill_professional(self, field_data, fieldname):
+        """
+        Fill professional information
+        like job experience, education etc.
+        """
         tsize = "{14cm}"
         self.append(NoEscape(r"\renewcommand{\arraystretch}{3}"))
         self.append(NoEscape(r"\setlength{\tabcolsep}{4pt}"))
@@ -112,4 +125,9 @@ class Lebenslauf(Document):
                     placement=NoEscape(r"\raggedleft"))
 
     def generate_document(self):
-        self.generate_pdf("Lebenslauf",compiler = 'xelatex', clean_tex=False)
+        """
+        Generate the CV 
+        xelatex is used to handle non standard fonts
+        """
+        self.generate_pdf(f"Lebenslauf_{self.input_data['name'].replace(' ','_')}"\
+                ,compiler = 'xelatex', clean_tex=False)
