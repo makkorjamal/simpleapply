@@ -15,8 +15,10 @@ This script allows you to generate a Letter (Anschreiben) and Resume (Lebenslauf
 All you need is Texlive-full installed in your system. You can follow the tutorial 
 [here](https://tug.org/texlive/)
 
-Also you need python to run the script
-
+Also you need python to run the script, then run
+```bash
+pip install -r requirements.txt
+```
 ## Run it
 You modify the templates in the template folders and you run:
 
