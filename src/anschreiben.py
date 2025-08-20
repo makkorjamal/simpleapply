@@ -1,16 +1,11 @@
 from datetime import datetime
 from pylatex.utils import bold
 from pylatex import (
-    Document,
-    HugeText,
-    Package,
-    Command,
-    Figure,
-    MediumText,
-    NoEscape,
-    MiniPage,
-    TextBlock,
-    VerticalSpace,
+    Document, HugeText, Package,
+    Command, Figure, MediumText,
+    LongTable, NoEscape, MiniPage,
+    TextBlock, VerticalSpace,FlushLeft,
+    FlushRight, NewLine
 )
 
 class Anschreiben(Document):
@@ -47,22 +42,22 @@ class Anschreiben(Document):
                 page.append(MediumText(bold(f"Bewerbung als \
                         {self.input_data['position']}")))
 
-            with page.create(TextBlock(100, 0, 80)):
+            with page.create(TextBlock(100, 0, 70)):
                 if self.input_data['gender']:
                     page.append(bold(f"Sehr geehrt{self.input_data['gender']}\
                             {self.input_data['hrname']},"))
                 else:
                     page.append(bold(f"Sehr geehrte Damen und Herren,"))
 
-            with page.create(TextBlock(100, 130, 200)):
-                page.append(bold(self.input_data['name']))
+        self.append(VerticalSpace("73mm"))
+        self.append(Command('doublespacing'))
+        with self.create(FlushLeft()):
+                with self.create(LongTable("p{17cm}")) as data_table:
+                    for par in self.template['t1'].split('\n'): 
+                        data_table.add_row([par])
 
-            page.append(VerticalSpace("90mm"))
-            self.append(Command('onehalfspacing'))
-            page.append(self.template["t1"])
-
-            page.append(VerticalSpace("30mm"))
-
+        with self.create(FlushRight()):
+            self.append(self.input_data['name'])
         with self.create(Figure(position="ht")) as signature:
             signature.add_image(self.input_data["signature_file"], \
                     width=NoEscape(r"0.2\linewidth"), \
