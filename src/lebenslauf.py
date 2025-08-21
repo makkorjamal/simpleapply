@@ -82,6 +82,7 @@ class Lebenslauf(Document):
                             data=LargeText(f"{cfield.capitalize()}")),\
                             self.add_timg(f"images/{cfield}"),\
                             LargeText(f"{cval}")))
+        self.append(Command(NoEscape(r"newpage")))
 
     def fill_professional(self, field_data, fieldname):
         """
@@ -136,7 +137,6 @@ class Lebenslauf(Document):
                 cdata = self.extract_data(v1)
                 if i == 0:
                     self.fill_personal(cdata)
-                    self.append(Command(NoEscape(r"newpage")))
                 else:
                     self.fill_professional(cdata,k1.capitalize())
 
