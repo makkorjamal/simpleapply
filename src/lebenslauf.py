@@ -1,6 +1,7 @@
 import yaml
 import os
 from collections import namedtuple
+import validators
 from pylatex import (
     Document, HugeText, LargeText,
     Package, Tabularx, Center,
@@ -49,7 +50,10 @@ class Lebenslauf(Document):
         """
         add a small image in the personal information field
         """
-        return NoEscape(r"\includegraphics[width="+size+r"]{"+path+r"}")
+        try:
+            return NoEscape(r"\includegraphics[width="+size+r"]{"+path+r"}")
+        except:
+            return NoEscape(r"\includegraphics[width="+size+r"]{default}")
 
     def extract_data(self, data):
         """
@@ -66,7 +70,7 @@ class Lebenslauf(Document):
 
     def fill_personal(self, field_data):
         """
-        Fill the personal data in the first page
+        Fills the personal data in the first page
         including tiny icons
         """
         with self.create(Center()):
@@ -81,7 +85,7 @@ class Lebenslauf(Document):
 
     def fill_professional(self, field_data, fieldname):
         """
-        Fill professional information
+        Fills professional information
         like job experience, education etc.
         """
         tsize = "{14cm}"
@@ -96,21 +100,15 @@ class Lebenslauf(Document):
                 field.add_hline()
                 for fd in field_data:
                     for i, detail in enumerate(fd.details):
-                        if i == 0:
-                            field.add_row((MultiRow(
-                                len(fd.details), 
-                                data=MediumText(bold(fd.title))), 
-                                                 MultiColumn(1, 
-                                                             align=NoEscape(
-                                                                 "p"+tsize), 
-                                                             data=MediumText(
-                                                                 detail))
-                                                 ))
-                        else:
-                            field.add_row(("", MultiColumn(1, align=NoEscape(
-                                "p"+tsize), 
-                                                           data=MediumText(
-                                                               detail))))
+                        if validators.url(detail): details = NoEscape(\
+                                r"\url{"+detail+r"}")
+                        field.add_row((MultiRow(
+                            len(fd.details), 
+                            data=MediumText(bold(fd.title))) if i == 0 else ""
+                                       , MultiColumn(1, 
+                                                     align=NoEscape("p"+tsize), 
+                                                     data=MediumText(detail))
+                                       ))
                     field.append(NoEscape(r"\cdashline{1-1}"))
 
     def fill_document(self):

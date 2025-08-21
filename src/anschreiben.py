@@ -58,10 +58,10 @@ class Anschreiben(Document):
 
         with self.create(FlushRight()):
             self.append(self.input_data['name'])
-        with self.create(Figure(position="ht")) as signature:
-            signature.add_image(self.input_data["signature_file"], \
-                    width=NoEscape(r"0.2\linewidth"), \
-                    placement=NoEscape(r"\raggedleft"))
+            with self.create(Figure(position="ht")) as signature:
+                signature.add_image(self.input_data["signature_file"], \
+                        width=NoEscape(r"0.2\linewidth"), \
+                        placement=NoEscape(r"\raggedleft"))
 
     def generate_document(self):
         self.generate_pdf(f"Anschreiben_{self.input_data['name'].replace(' ','_')}",\
