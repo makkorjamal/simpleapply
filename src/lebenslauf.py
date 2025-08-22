@@ -53,6 +53,7 @@ class Lebenslauf(Document):
         try:
             return NoEscape(r"\includegraphics[width="+size+r"]{"+path+r"}")
         except:
+            print("The tiny images should match the names in personal. Falling back to default")
             return NoEscape(r"\includegraphics[width="+size+r"]{default}")
 
     def extract_data(self, data):
